@@ -6,7 +6,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
     <servlet>
-        <servlet-name>Wallet REST Service</servlet-name>
+        <servlet-name>jersey-serlvet</servlet-name>
         <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
         <init-param>
             <param-name>com.sun.jersey.config.property.packages</param-name>
@@ -16,7 +16,7 @@
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>Wallet REST Service</servlet-name>
+        <servlet-name>jersey-serlvet</servlet-name>
         <url-pattern>/service/*</url-pattern>
     </servlet-mapping>
 </web-app>
