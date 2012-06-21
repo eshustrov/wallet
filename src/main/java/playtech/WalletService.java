@@ -9,6 +9,8 @@ import java.math.BigDecimal;
 
 @Path("/")
 public class WalletService {
+    private static final BigDecimal HUNDRED = new BigDecimal(100);
+
     @PUT
     @Path("balance/{username}/{transactionId}/{balanceChange}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -20,7 +22,7 @@ public class WalletService {
         status.errorCode = 0;
         status.balanceVersion = 1;
         status.balanceChange = balanceChange;
-        status.balanceAfterChange = BigDecimal.ZERO.add(balanceChange);
+        status.balanceAfterChange = HUNDRED.add(balanceChange);
         return status;
     }
 }
