@@ -5,9 +5,9 @@ import java.math.BigDecimal;
 
 @XmlRootElement
 public class WalletStatus {
-    public long transactionId;
+    public int transactionId;
     public int errorCode;
-    public long balanceVersion;
+    public int balanceVersion;
     public BigDecimal balanceChange = BigDecimal.ZERO;
     public BigDecimal balanceAfterChange = BigDecimal.ZERO;
 }

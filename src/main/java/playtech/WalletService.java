@@ -29,7 +29,7 @@ public class WalletService {
     @Path("balance/{username}/{transactionId}/{balanceChange}")
     @Produces(MediaType.APPLICATION_JSON)
     public WalletStatus changeBalance(@PathParam("username") final String username,
-                                      @PathParam("transactionId") final long transactionId,
+                                      @PathParam("transactionId") final int transactionId,
                                       @PathParam("balanceChange") final BigDecimal balanceChange) {
 
         final WalletStatus status = new WalletStatus();
