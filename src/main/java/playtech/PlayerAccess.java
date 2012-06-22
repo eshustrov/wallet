@@ -24,6 +24,11 @@ public class PlayerAccess {
         return database.queryForObject("SELECT * FROM PLAYER WHERE USERNAME = ?", MAPPER, username);
     }
 
+    public void update(final Player player) {
+        database.update("UPDATE PLAYER SET (BALANCE_VERSION, BALANCE) = (?, ?) WHERE USERNAME = ?",
+                player.balanceVersion, player.balance, player.username);
+    }
+
     private static class PlayerMapper implements RowMapper<Player> {
         @Override
         public Player mapRow(final ResultSet rs, final int rowNum) throws SQLException {

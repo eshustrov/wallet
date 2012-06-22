@@ -43,10 +43,13 @@ public class WalletService {
             return status;
         }
 
+        player.balanceVersion++;
+        player.balance = player.balance.add(balanceChange);
+        playerAccess.update(player);
+
         status.balanceVersion = player.balanceVersion;
         status.balanceChange = balanceChange;
-        status.balanceAfterChange = player.balance.add(balanceChange);
-        System.out.println(playerAccess);
+        status.balanceAfterChange = player.balance;
         return status;
     }
 }

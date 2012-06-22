@@ -18,7 +18,6 @@ public class DatabaseLoader {
                 continue;
             }
 
-            System.out.println(command);
             database.execute(command);
         }
     }
