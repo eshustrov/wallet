@@ -2,6 +2,7 @@ package playtech;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Component;
 
 import javax.ws.rs.PUT;
@@ -15,6 +16,8 @@ import java.math.BigDecimal;
 @Scope("request")
 @Path("/")
 public class WalletService {
+    private static final int NOT_FOUND = 1;
+
     private final PlayerAccess playerAccess;
 
     @Autowired
@@ -28,11 +31,18 @@ public class WalletService {
     public WalletStatus changeBalance(@PathParam("username") final String username,
                                       @PathParam("transactionId") final long transactionId,
                                       @PathParam("balanceChange") final BigDecimal balanceChange) {
-        final Player player = playerAccess.load(username);
 
         final WalletStatus status = new WalletStatus();
         status.transactionId = transactionId;
-        status.errorCode = 0;
+
+        final Player player;
+        try {
+            player = playerAccess.load(username);
+        } catch (EmptyResultDataAccessException exception) {
+            status.errorCode = NOT_FOUND;
+            return status;
+        }
+
         status.balanceVersion = player.balanceVersion;
         status.balanceChange = balanceChange;
         status.balanceAfterChange = player.balance.add(balanceChange);
