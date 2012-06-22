@@ -1,8 +1,7 @@
 package playtech;
 
-import com.sun.jersey.api.spring.Autowire;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
@@ -15,13 +14,13 @@ import java.math.BigDecimal;
 
 @Component
 @Scope("request")
-@Autowire
 @Path("/")
 public class WalletService {
     private static final BigDecimal HUNDRED = new BigDecimal(100);
 
     private final DataSource dataSource;
 
+    @Autowired
     public WalletService(final DataSource dataSource) {
         this.dataSource = dataSource;
     }
@@ -39,8 +38,6 @@ public class WalletService {
         status.balanceChange = balanceChange;
         status.balanceAfterChange = HUNDRED.add(balanceChange);
         System.out.println(dataSource);
-        final JdbcTemplate database = new JdbcTemplate(dataSource);
-        database.update("CREATE TABLE A(A NUMERIC)");
         return status;
     }
 }

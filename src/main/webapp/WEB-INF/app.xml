@@ -13,4 +13,8 @@
         <property name="username" value="sa"/>
         <property name="password" value=""/>
     </bean>
+
+    <bean class="playtech.DatabaseLoader">
+        <constructor-arg name="script" value="database.sql"/>
+    </bean>
 </beans>
