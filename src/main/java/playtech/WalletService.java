@@ -22,10 +22,12 @@ public class WalletService {
     private static final int NOT_FOUND = 1;
 
     private final PlayerAccess playerAccess;
+    private final Statistics statistics;
 
     @Autowired
-    public WalletService(final PlayerAccess playerAccess) {
+    public WalletService(final PlayerAccess playerAccess, final Statistics statistics) {
         this.playerAccess = playerAccess;
+        this.statistics = statistics;
     }
 
     @PUT
@@ -34,8 +36,7 @@ public class WalletService {
     public WalletStatus changeBalance(@PathParam("username") final String username,
                                       @PathParam("transactionId") final int transactionId,
                                       @PathParam("balanceChange") final BigDecimal balanceChange) {
-
-        System.out.println(LOGGER);
+        final long time = System.currentTimeMillis();
         LOGGER.info("IN: transaction {} for user {}: requested balance change: {}",
                 new Object[]{transactionId, username, balanceChange});
         final WalletStatus status = new WalletStatus();
@@ -48,6 +49,7 @@ public class WalletService {
             status.errorCode = NOT_FOUND;
             LOGGER.info("OUT: transaction {} for user {}: error code: {}",
                     new Object[]{status.transactionId, username, status.errorCode});
+            statistics.reportRequest(System.currentTimeMillis() - time);
             return status;
         }
 
@@ -61,6 +63,7 @@ public class WalletService {
         LOGGER.info("OUT: transaction {} for user {}: balance {} of version {} after change {}",
                 new Object[]{status.transactionId, username,
                         status.balanceAfterChange, status.balanceVersion, status.balanceChange});
+        statistics.reportRequest(System.currentTimeMillis() - time);
         return status;
     }
 }
